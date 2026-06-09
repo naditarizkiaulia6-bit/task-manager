@@ -1,0 +1,96 @@
+@extends('layouts.app')
+
+@section('page_title', 'Tambah Tag - Query Builder')
+
+@section('content')
+    <div class="max-w-2xl">
+        <div class="bg-white rounded-xl shadow-sm p-8">
+            <div class="mb-6 pb-6 border-b border-slate-200">
+                <h3 class="text-lg font-bold text-slate-900">Tambah Tag Baru</h3>
+                <p class="text-sm text-slate-600 mt-1">Menggunakan <span class="font-mono bg-slate-100 px-2 py-1 rounded">Query Builder - insert()</span></p>
+            </div>
+
+            <form action="{{ route('tags.query-builder.store') }}" method="POST" class="space-y-6">
+                @csrf
+
+                <div>
+                    <label for="name" class="block text-sm font-medium text-slate-700 mb-2">Nama Tag</label>
+                    <input 
+                        type="text" 
+                        name="name" 
+                        id="name"
+                        value="{{ old('name') }}"
+                        required
+                        maxlength="50"
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="e.g., Frontend, Backend, Testing">
+                    @error('name')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="color" class="block text-sm font-medium text-slate-700 mb-2">Warna</label>
+                    <div class="grid grid-cols-4 gap-3">
+                        @foreach ($colors as $value => $label)
+                            <label class="flex items-center cursor-pointer">
+                                <input 
+                                    type="radio" 
+                                    name="color" 
+                                    value="{{ $value }}"
+                                    {{ old('color') == $value ? 'checked' : '' }}
+                                    required
+                                    class="w-4 h-4 accent-green-500">
+                                <span class="ml-2 text-sm text-slate-700">{{ $label }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                    @error('color')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <label for="description" class="block text-sm font-medium text-slate-700 mb-2">Deskripsi (Opsional)</label>
+                    <textarea 
+                        name="description" 
+                        id="description"
+                        rows="3"
+                        maxlength="255"
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="Deskripsi tag..."></textarea>
+                    @error('description')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex gap-3 pt-4">
+                    <button 
+                        type="submit" 
+                        class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-colors font-medium">
+                        Simpan Tag
+                    </button>
+                    <a 
+                        href="{{ route('tags.query-builder.index') }}" 
+                        class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-2 rounded-lg transition-colors font-medium">
+                        Batal
+                    </a>
+                </div>
+            </form>
+
+            <!-- Query Builder Code Example -->
+            <div class="mt-8 p-4 bg-green-100 rounded-lg">
+                <p class="text-sm font-mono text-green-900">
+                    <span class="font-bold">Query Builder:</span><br>
+                    DB::table('tags')->insert([<br>
+                    &nbsp;&nbsp;'name' => $name,<br>
+                    &nbsp;&nbsp;'color' => $color,<br>
+                    &nbsp;&nbsp;'description' => $description,<br>
+                    &nbsp;&nbsp;'created_at' => now(),<br>
+                    &nbsp;&nbsp;'updated_at' => now(),<br>
+                    ]);
+                </p>
+            </div>
+        </div>
+    </div>
+@endsection
