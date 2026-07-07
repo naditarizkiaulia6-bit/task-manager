@@ -11,6 +11,9 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TagControllerRawSQL;
 use App\Http\Controllers\TagControllerQueryBuilder;
 use App\Models\User;
+use App\Http\Controllers\ValidationController;
+
+Route::get('/validasi', [ValidationController::class, 'index']);
 
 Route::get('/', function () {
     if (auth()->check()) {

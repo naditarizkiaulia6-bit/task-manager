@@ -10,24 +10,40 @@ class ProjectSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::where('role', 'admin')->first();
+        // Hanya buat projects untuk 5 member users
+        // Admin TIDAK memiliki projects (berperan sebagai koordinator)
+        
+        $members = User::where('role', 'member')->get();
+        
+        $projectData = [
+            [
+                'name' => 'E-commerce Website',
+                'description' => 'Pengembangan platform e-commerce online store',
+            ],
+            [
+                'name' => 'Mobile Banking App',
+                'description' => 'Aplikasi mobile banking untuk nasabah',
+            ],
+            [
+                'name' => 'Admin Dashboard',
+                'description' => 'Dashboard untuk monitoring dan reporting',
+            ],
+            [
+                'name' => 'API Gateway',
+                'description' => 'Pengembangan API gateway untuk integrasi sistem',
+            ],
+            [
+                'name' => 'Customer Portal',
+                'description' => 'Portal pelanggan untuk self-service',
+            ],
+        ];
 
-        Project::create([
-            'user_id' => $admin->id,
-            'name' => 'Website Redesign 2024',
-            'description' => 'Redesign website perusahaan dengan teknologi terbaru',
-        ]);
-
-        Project::create([
-            'user_id' => $admin->id,
-            'name' => 'Mobile App Development',
-            'description' => 'Pengembangan aplikasi mobile untuk iOS dan Android',
-        ]);
-
-        Project::create([
-            'user_id' => $admin->id,
-            'name' => 'Dashboard Analytics',
-            'description' => 'Pembuatan dashboard analytics real-time',
-        ]);
+        foreach ($members as $index => $member) {
+            Project::create([
+                'user_id' => $member->id,
+                'name' => $projectData[$index]['name'],
+                'description' => $projectData[$index]['description'],
+            ]);
+        }
     }
 }

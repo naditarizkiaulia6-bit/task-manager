@@ -22,7 +22,7 @@
                     </form>
                 <?php endif; ?>
 
-                <a href="#" class="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">Edit</a>
+                <a href="<?php echo e(route('tasks.edit', $task)); ?>" class="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">Edit</a>
 
                 <form action="<?php echo e(route('tasks.destroy', $task)); ?>" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')" class="block">
                     <?php echo csrf_field(); ?>

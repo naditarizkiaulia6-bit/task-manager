@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,7 +8,6 @@ use Illuminate\View\View;
 
 class TagControllerQueryBuilder extends Controller
 {
-   
     public function index(): View
     {
         // Query Builder untuk mengambil semua tags
@@ -19,8 +17,7 @@ class TagControllerQueryBuilder extends Controller
 
         return view('tags.query-builder.index', compact('tags'));
     }
-
-    public function create(): View
+   public function create(): View
     {
         $colors = [
             'red' => 'Merah',
@@ -102,10 +99,8 @@ class TagControllerQueryBuilder extends Controller
             'indigo' => 'Indigo',
             'gray' => 'Abu-abu',
         ];
-
         return view('tags.query-builder.edit', compact('tag', 'colors'));
     }
-
     public function update(Request $request, $id)
     {
         // Validasi input
@@ -159,7 +154,6 @@ class TagControllerQueryBuilder extends Controller
             return back()->with('error', 'Gagal menghapus tag: ' . $e->getMessage());
         }
     }
-
     public function paginated(Request $request)
     {
         // Query Builder dengan pagination
@@ -169,7 +163,6 @@ class TagControllerQueryBuilder extends Controller
 
         return view('tags.query-builder.paginated', compact('tags'));
     }
-
     public function statistics()
     {
         // Query Builder untuk aggregate functions
@@ -188,7 +181,6 @@ class TagControllerQueryBuilder extends Controller
 
         return response()->json($stats);
     }
-
     public function search(Request $request)
     {
         $query = $request->input('q', '');
@@ -214,7 +206,6 @@ class TagControllerQueryBuilder extends Controller
         if (empty($ids)) {
             return back()->with('error', 'Pilih minimal 1 tag');
         }
-
         try {
             // Query Builder untuk bulk delete
             DB::table('task_tags')

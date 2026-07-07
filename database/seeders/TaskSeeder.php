@@ -12,115 +12,63 @@ class TaskSeeder extends Seeder
 {
     public function run(): void
     {
-        $project = Project::first();
-        $users = User::where('role', 'member')->get();
+        $members = User::where('role', 'member')->get();
 
-        $tasks = [
+        // Sample tasks untuk setiap member project
+        $taskTemplates = [
+            // E-commerce Website
             [
-                'title' => 'Desain UI Dashboard',
-                'description' => 'Membuat design mockup untuk dashboard admin dengan Figma',
-                'category' => 'design',
-                'priority' => 'high',
-                'status' => 'todo',
-                'due_date' => Carbon::now()->addDays(5),
-                'assignee_id' => $users[0]->id,
-                'progress' => 0,
+                ['title' => 'Setup Database Schema', 'description' => 'Perancangan schema database untuk produk dan order', 'category' => 'dev', 'priority' => 'high', 'status' => 'todo', 'progress' => 0],
+                ['title' => 'Frontend Homepage Design', 'description' => 'Membuat design homepage yang menarik', 'category' => 'design', 'priority' => 'high', 'status' => 'progress', 'progress' => 60],
+                ['title' => 'Payment Gateway Integration', 'description' => 'Integrasi dengan payment gateway', 'category' => 'dev', 'priority' => 'high', 'status' => 'todo', 'progress' => 0],
             ],
+            // Mobile Banking App
             [
-                'title' => 'Setup Database Server',
-                'description' => 'Konfigurasi PostgreSQL database di server production',
-                'category' => 'dev',
-                'priority' => 'high',
-                'status' => 'todo',
-                'due_date' => Carbon::now()->addDays(3),
-                'assignee_id' => $users[1]->id,
-                'progress' => 0,
+                ['title' => 'UI/UX Design Mobile App', 'description' => 'Desain interface mobile banking', 'category' => 'design', 'priority' => 'high', 'status' => 'progress', 'progress' => 50],
+                ['title' => 'Authentication System', 'description' => 'Implementasi sistem autentikasi dengan biometric', 'category' => 'dev', 'priority' => 'high', 'status' => 'todo', 'progress' => 0],
+                ['title' => 'Testing & QA', 'description' => 'Testing aplikasi di berbagai devices', 'category' => 'research', 'priority' => 'medium', 'status' => 'todo', 'progress' => 0],
             ],
+            // Admin Dashboard
             [
-                'title' => 'Implementasi API Login',
-                'description' => 'Membuat endpoint login dengan JWT authentication',
-                'category' => 'dev',
-                'priority' => 'high',
-                'status' => 'progress',
-                'due_date' => Carbon::now()->addDays(2),
-                'assignee_id' => $users[2]->id,
-                'progress' => 75,
+                ['title' => 'Dashboard Layout Setup', 'description' => 'Membuat layout dashboard dengan responsif', 'category' => 'dev', 'priority' => 'high', 'status' => 'progress', 'progress' => 75],
+                ['title' => 'Chart Integration', 'description' => 'Integrasi library chart untuk visualisasi data', 'category' => 'dev', 'priority' => 'medium', 'status' => 'todo', 'progress' => 0],
+                ['title' => 'API Documentation', 'description' => 'Membuat dokumentasi API lengkap', 'category' => 'dev', 'priority' => 'low', 'status' => 'todo', 'progress' => 0],
             ],
+            // API Gateway
             [
-                'title' => 'Fix Bug Responsive Mobile',
-                'description' => 'Memperbaiki layout yang tidak responsive di halaman produk',
-                'category' => 'bug',
-                'priority' => 'medium',
-                'status' => 'progress',
-                'due_date' => Carbon::now()->addDays(1),
-                'assignee_id' => $users[3]->id,
-                'progress' => 50,
+                ['title' => 'API Design & Planning', 'description' => 'Merencanakan struktur dan design API', 'category' => 'research', 'priority' => 'high', 'status' => 'done', 'progress' => 100],
+                ['title' => 'Authentication & Authorization', 'description' => 'Implementasi OAuth dan JWT', 'category' => 'dev', 'priority' => 'high', 'status' => 'progress', 'progress' => 80],
+                ['title' => 'Rate Limiting & Monitoring', 'description' => 'Setup rate limiting dan monitoring API', 'category' => 'dev', 'priority' => 'medium', 'status' => 'todo', 'progress' => 0],
             ],
+            // Customer Portal
             [
-                'title' => 'Riset Teknologi AI',
-                'description' => 'Melakukan riset tentang implementasi Machine Learning untuk rekomendasi produk',
-                'category' => 'research',
-                'priority' => 'medium',
-                'status' => 'progress',
-                'due_date' => Carbon::now()->addDays(7),
-                'assignee_id' => $users[4]->id,
-                'progress' => 30,
-            ],
-            [
-                'title' => 'Optimasi Performance Database',
-                'description' => 'Mengoptimalkan query dan indexing untuk mengurangi query time',
-                'category' => 'dev',
-                'priority' => 'medium',
-                'status' => 'review',
-                'due_date' => Carbon::now()->addDays(0),
-                'assignee_id' => $users[0]->id,
-                'progress' => 95,
-            ],
-            [
-                'title' => 'Design Banner Promo',
-                'description' => 'Membuat design banner untuk campaign promo Ramadhan',
-                'category' => 'design',
-                'priority' => 'low',
-                'status' => 'review',
-                'due_date' => Carbon::now()->addDays(1),
-                'assignee_id' => $users[1]->id,
-                'progress' => 85,
-            ],
-            [
-                'title' => 'Setup CI/CD Pipeline',
-                'description' => 'Konfigurasi GitHub Actions untuk automated deployment',
-                'category' => 'dev',
-                'priority' => 'high',
-                'status' => 'done',
-                'due_date' => Carbon::now()->subDays(2),
-                'assignee_id' => $users[2]->id,
-                'progress' => 100,
-            ],
-            [
-                'title' => 'Fix Critical Security Bug',
-                'description' => 'Memperbaiki SQL Injection vulnerability di halaman search',
-                'category' => 'bug',
-                'priority' => 'high',
-                'status' => 'done',
-                'due_date' => Carbon::now()->subDays(1),
-                'assignee_id' => $users[3]->id,
-                'progress' => 100,
-            ],
-            [
-                'title' => 'Update Documentation',
-                'description' => 'Memperbarui API documentation dengan endpoint terbaru',
-                'category' => 'dev',
-                'priority' => 'low',
-                'status' => 'done',
-                'due_date' => Carbon::now()->subDays(3),
-                'assignee_id' => $users[4]->id,
-                'progress' => 100,
+                ['title' => 'User Profile Page', 'description' => 'Membuat halaman profil user dengan edit functionality', 'category' => 'dev', 'priority' => 'medium', 'status' => 'progress', 'progress' => 40],
+                ['title' => 'Ticket Support System', 'description' => 'Implementasi sistem tiket support', 'category' => 'dev', 'priority' => 'high', 'status' => 'todo', 'progress' => 0],
+                ['title' => 'Notification System', 'description' => 'Membuat sistem notifikasi real-time', 'category' => 'dev', 'priority' => 'medium', 'status' => 'todo', 'progress' => 0],
             ],
         ];
 
-        foreach ($tasks as $task) {
-            $task['project_id'] = $project->id;
-            Task::create($task);
+        // Assign tasks ke setiap member project
+        foreach ($members as $index => $member) {
+            $project = $member->projects()->first();
+            
+            if ($project && isset($taskTemplates[$index])) {
+                foreach ($taskTemplates[$index] as $taskData) {
+                    $daysOffset = $taskData['status'] === 'done' ? -3 : ($taskData['status'] === 'progress' ? 1 : 3);
+                    
+                    Task::create([
+                        'project_id' => $project->id,
+                        'title' => $taskData['title'],
+                        'description' => $taskData['description'],
+                        'category' => $taskData['category'],
+                        'priority' => $taskData['priority'],
+                        'status' => $taskData['status'],
+                        'progress' => $taskData['progress'],
+                        'due_date' => Carbon::now()->addDays($daysOffset),
+                        'assignee_id' => $member->id,
+                    ]);
+                }
+            }
         }
     }
 }

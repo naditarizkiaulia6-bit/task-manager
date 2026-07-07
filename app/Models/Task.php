@@ -42,6 +42,11 @@ class Task extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'task_tags');
+    }
+
     // Accessors
     public function getCategoryColorAttribute(): string
     {

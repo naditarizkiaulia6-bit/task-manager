@@ -22,7 +22,7 @@
                     </form>
                 @endif
 
-                <a href="#" class="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">Edit</a>
+                <a href="{{ route('tasks.edit', $task) }}" class="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">Edit</a>
 
                 <form action="{{ route('tasks.destroy', $task) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?')" class="block">
                     @csrf
